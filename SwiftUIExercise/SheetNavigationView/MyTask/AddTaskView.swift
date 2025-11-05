@@ -14,50 +14,52 @@ struct AddTaskView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        ZStack {
-            Color.orange
+        NavigationStack {
+            ZStack {
+                Color.orange
+                    .ignoresSafeArea()
+    
+                VStack {
+                    Spacer()
+    
+                    TextField("할 일을 입력하세요", text: $task)
+                        .padding()
+                        .textFieldStyle(.roundedBorder)
+    
+                    Spacer()
+    
+                    Text("모달로 표시됨")
+                        .font(.headline)
+                        .foregroundStyle(.white)
+                        .padding()
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            //action
+                            dismiss()
+                        } label: {
+                            Text("취소")
+                                .font(.headline)
+                                .foregroundStyle(.white)
+                        }
+                    } // : ToolbarItem
+    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            //action
+                            tasks.append(task)
+                            dismiss()
+                        } label: {
+                            Text("저장")
+                                .font(.headline)
+                                .foregroundStyle(.white)
+                        }
+                    } // : ToolbarItem
+                } // : VStack (toolbar)
                 .ignoresSafeArea()
-            
-            VStack {
-                Spacer()
-                
-                TextField("할 일을 입력하세요", text: $task)
-                    .padding()
-                    .textFieldStyle(.automatic)
-                
-                Spacer()
-             
-                Text("모달로 표시됨")
-                    .font(.headline)
-                    .foregroundStyle(.white)
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        //action
-                        dismiss()
-                    } label: {
-                        Text("취소")
-                            .font(.headline)
-                            .foregroundStyle(.white)
-                    }
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        //action
-                        tasks.append(task)
-                        dismiss()
-                    } label: {
-                        Text("저장")
-                            .font(.headline)
-                            .foregroundStyle(.white)
-
-                    }
-
-                }
-            }
-        }
+            } //: ZStack
+        } // : NavigationStack
     }
 }
 
