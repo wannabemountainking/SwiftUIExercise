@@ -8,8 +8,14 @@
 import SwiftUI
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct Product {
     let name: String
+=======
+struct Product: Identifiable {
+    let id = UUID()
+    var name: String
+>>>>>>> origin/main
 =======
 struct Product: Identifiable {
     let id = UUID()
@@ -21,6 +27,11 @@ struct Product: Identifiable {
 struct ShoppingCart: View {
     
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    @State private var inCart: [Product] = []
+    @State private var showAlert: Bool = false
+>>>>>>> origin/main
 =======
     @State private var inCart: [Product] = []
     @State private var showAlert: Bool = false
@@ -32,6 +43,7 @@ struct ShoppingCart: View {
     ]
     @State private var alertType: AlertType?
     
+<<<<<<< HEAD
 <<<<<<< HEAD
     @State private var soonToDelete: String?
     @State private var soonToAdd: String?
@@ -49,9 +61,11 @@ struct ShoppingCart: View {
         )
     }
     
+=======
+>>>>>>> origin/main
     enum AlertType: Identifiable {
-        var id: Self { self }
         
+<<<<<<< HEAD
         case highend
         case ordinary
         case adding
@@ -59,18 +73,27 @@ struct ShoppingCart: View {
 =======
     enum AlertType: Identifiable {
         
+=======
+>>>>>>> origin/main
         var id: UUID { UUID() }
         
         case highend(product: Product)
         case regular(product: Product)
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
 >>>>>>> origin/main
         
         var title: String {
             switch self {
             case .highend: return "고가 상품 확인"
 <<<<<<< HEAD
+<<<<<<< HEAD
             case .deleting: return "장바구니 비우기"
             case .adding: return "장바구니에 넣기"
+=======
+            case .regular: return "장바구니 담기"
+>>>>>>> origin/main
 =======
             case .regular: return "장바구니 담기"
 >>>>>>> origin/main
@@ -80,9 +103,14 @@ struct ShoppingCart: View {
         var message: String {
             switch self {
 <<<<<<< HEAD
+<<<<<<< HEAD
             case .highend: return "고가 상품입니다. 다시 한 번 확인해 주세요"
             case .deleting: return "장바구니에서 해당 상품을 비웁니다"
             case .adding: return "이 상품은 \()"
+=======
+            case .highend(let product): return "이 상품은 \(product.price)원입니다. 장바구니에 담으시겠습니까?"
+            case .regular(let product): return "\(product.name)을 장바구니에 바로 담았습니다!"
+>>>>>>> origin/main
 =======
             case .highend(let product): return "이 상품은 \(product.price)원입니다. 장바구니에 담으시겠습니까?"
             case .regular(let product): return "\(product.name)을 장바구니에 바로 담았습니다!"
@@ -93,8 +121,11 @@ struct ShoppingCart: View {
     
     var body: some View {
 <<<<<<< HEAD
+<<<<<<< HEAD
         
 =======
+=======
+>>>>>>> origin/main
         ZStack {
             Color.orange
                 .ignoresSafeArea()
@@ -176,6 +207,9 @@ struct ShoppingCart: View {
                 Text(type.message)
             }
         }
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
 >>>>>>> origin/main
     }
 }
