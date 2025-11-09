@@ -13,12 +13,7 @@ struct ProductInfo: View {
         Product(name: "coffee bean", price: 3000, stock: 300),
         Product(name: "cake", price: 20000, stock: 50)
     ]
-<<<<<<< HEAD
-    @State private var selectedItem: Product?
-    @State private var toBuy: Bool = false
-=======
     @State private var alertData: AlertData?
->>>>>>> origin/main
     
     struct Product: Identifiable {
         let id = UUID()
@@ -27,8 +22,6 @@ struct ProductInfo: View {
         var stock: Int
     }
     
-<<<<<<< HEAD
-=======
     struct AlertData: Identifiable {
         let id = UUID()
         let type: AlertType
@@ -54,7 +47,6 @@ struct ProductInfo: View {
         }
     }
     
->>>>>>> origin/main
     var body: some View {
         ZStack {
             Color.orange.ignoresSafeArea()
@@ -63,26 +55,6 @@ struct ProductInfo: View {
                 List {
                     Section {
                         //content
-<<<<<<< HEAD
-                        ForEach($products) { product in
-                            selectedItem = Product(
-                                name: product.name.wrappedValue,
-                                price: product.price.wrappedValue,
-                                stock: product.stock.wrappedValue
-                            )
-                            HStack {
-                                Text("\(product.name) (\(product.price)원, \(product.stock)개 남음)")
-                                    .font(.headline)
-                                    .foregroundStyle(.purple)
-                                Spacer()
-                                Button {
-                                    //action
-                                    
-                                } label: {
-                                    <#code#>
-                                }
-
-=======
                         ForEach(products, id: \.self.id) { product in
                             HStack {
                                 Text("\(product.name) (\(product.price)원, \(product.stock)개 남음)")
@@ -94,13 +66,12 @@ struct ProductInfo: View {
                                     alertData = AlertData(
                                         type: product.stock == 0 ? .outOfStock(item: product.name) : .purchaseConfirm(item: product.name, price: product.price, stock: product.stock),
                                         product: product
-                                        )
+                                    )
                                 } label: {
                                     Text("구매")
                                         .font(.headline)
                                         .foregroundStyle(.blue)
                                 }
->>>>>>> origin/main
                             }
                         }
                     } header: {
@@ -109,10 +80,6 @@ struct ProductInfo: View {
                             .fontWeight(.light)
                             .foregroundStyle(.pink)
                     }
-<<<<<<< HEAD
-
-                }//: list
-=======
                 }//: list
                 .alert(
                     alertData?.title ?? "상품 구매",
@@ -138,11 +105,9 @@ struct ProductInfo: View {
                 } message: { alertData in
                     Text(alertData.message)
                 }
-
->>>>>>> origin/main
             }//: VStack
         }//: ZStack
-    }
+    }//: body
 }
 
 #Preview {
