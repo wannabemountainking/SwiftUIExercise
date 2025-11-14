@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BindingBasic: View {
+struct BindingBasic1: View {
     @State private var name: String = ""
     @State private var showAlert: Bool = false
     
@@ -46,5 +46,5 @@ struct BindingBasic: View {
 }
 
 #Preview {
-    BindingBasic()
+    BindingBasic1()
 }
