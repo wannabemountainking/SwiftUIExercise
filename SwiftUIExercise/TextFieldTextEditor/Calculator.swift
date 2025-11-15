@@ -12,16 +12,10 @@ import SwiftUI
 struct Calculator: View {
     @State private var firstNumber: String = ""
     @State private var secondNumber: String = ""
-<<<<<<< HEAD
-    @State private var result: String = ""
-    
-    enum BasicOperator: Identifiable {
-=======
     @State private var result: String?
     @State private var basic: BasicOperator?
     
     enum BasicOperator: Identifiable, CaseIterable {
->>>>>>> origin/main
         case addition
         case subtraction
         case multiplication
@@ -47,10 +41,6 @@ struct Calculator: View {
     }
     
     var body: some View {
-<<<<<<< HEAD
-        
-    }
-=======
         ZStack {
             Color.orange.ignoresSafeArea()
             VStack(spacing: 20) {
@@ -102,7 +92,6 @@ struct Calculator: View {
             }//: VStack
         }//: ZStack
     }//: body
->>>>>>> origin/main
     
     private func calculateBasicOperation(basicOp: BasicOperator) -> String {
         guard let first = Double(firstNumber),
