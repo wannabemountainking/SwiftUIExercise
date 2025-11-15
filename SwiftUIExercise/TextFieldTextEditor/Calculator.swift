@@ -12,9 +12,16 @@ import SwiftUI
 struct Calculator: View {
     @State private var firstNumber: String = ""
     @State private var secondNumber: String = ""
+<<<<<<< HEAD
     @State private var result: String = ""
     
     enum BasicOperator: Identifiable {
+=======
+    @State private var result: String?
+    @State private var basic: BasicOperator?
+    
+    enum BasicOperator: Identifiable, CaseIterable {
+>>>>>>> origin/main
         case addition
         case subtraction
         case multiplication
@@ -40,8 +47,62 @@ struct Calculator: View {
     }
     
     var body: some View {
+<<<<<<< HEAD
         
     }
+=======
+        ZStack {
+            Color.orange.ignoresSafeArea()
+            VStack(spacing: 20) {
+                Spacer()
+                
+                VStack(spacing: 20) {
+                    TextField("첫 번째 숫자", text: $firstNumber)
+                    TextField("두 번째 숫자", text: $secondNumber)
+                        
+                }// VStack
+                .font(.headline)
+                .padding(10)
+                .padding(.horizontal, 10)
+                .keyboardType(.numberPad)
+                .textFieldStyle(.roundedBorder)
+                HStack(spacing: 20) {
+                    ForEach(BasicOperator.allCases, id: \.id) { basicOperator in
+                        Button {
+                            //action
+                            basic = basicOperator
+                            
+                        } label: {
+                            Text(basicOperator.symbol)
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundStyle(.white)
+                                .frame(
+                                    width: (UIScreen.main.bounds.width - 100) / 4,
+                                    height: (UIScreen.main.bounds.width - 100) / 4
+                                )
+                                .background(Color.blue)
+                                .clipShape(
+                                    RoundedRectangle(cornerRadius: 5)
+                                )
+                        }
+                    }//: foreach
+                }//: HStack
+                
+                VStack(spacing: 20) {
+                    Button {
+                        //action
+                        
+                    } label: {
+                        <#code#>
+                    }
+
+                }
+                Spacer()
+            }//: VStack
+        }//: ZStack
+    }//: body
+>>>>>>> origin/main
     
     private func calculateBasicOperation(basicOp: BasicOperator) -> String {
         guard let first = Double(firstNumber),
