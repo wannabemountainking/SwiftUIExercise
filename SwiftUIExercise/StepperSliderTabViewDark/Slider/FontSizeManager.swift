@@ -2,7 +2,7 @@
 //  FontSizeManager.swift
 //  SwiftUIExercise
 //
-//  Created by YoonieMac on 11/22/25.
+//  Created by yoonie on 11/22/25.
 //
 
 import SwiftUI
