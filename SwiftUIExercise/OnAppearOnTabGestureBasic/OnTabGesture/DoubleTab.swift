@@ -1,0 +1,51 @@
+//
+//  DoubleTab.swift
+//  SwiftUIExercise
+//
+//  Created by YoonieMac on 11/26/25.
+//
+
+import SwiftUI
+
+struct DoubleTab: View {
+    @State private var showHeart: Bool = false
+    @State private var numberOfLikes: Int = 0
+    
+    var body: some View {
+        ZStack {
+            Color.white.ignoresSafeArea()
+            
+            VStack(spacing: 100) {
+                ZStack {
+                    if showHeart {
+                        Image(systemName: "heart.fill")
+                            .resizable()
+                            .frame(width: 250, height: 250)
+                            .foregroundStyle(showHeart ? .red : .clear)
+                    } else {
+                        Image(systemName: "pointer.arrow.click.2")
+                            .resizable()
+                            .frame(width: 250, height: 250)
+                            .foregroundStyle(showHeart ? .clear : .indigo)
+                            .onTapGesture(count: 2) {
+                                showHeart = true
+                                numberOfLikes += 1
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                    showHeart = false
+                                }
+                            }
+                    }
+                }
+                .animation(.easeInOut(duration: 1.0), value: showHeart)
+
+                Text("👍 : \(numberOfLikes)")
+                    .font(.largeTitle)
+                    .fontWeight(.semibold)
+            }
+        }
+    }
+}
+
+#Preview {
+    DoubleTab()
+}
