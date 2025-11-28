@@ -116,7 +116,10 @@ struct ImageGalleryView: View {
                                         .padding(.bottom, 10)
                                 }
                                 .padding(3)
+                            Text("❤️  \(photo.likeCount)")
+                                .font(.headline)
                         }
+                        .padding(.vertical, 10)
                         .onAppear {
                             if !photo.isCounted {
                                 photosLoaded += 1
@@ -133,7 +136,7 @@ struct ImageGalleryView: View {
                                 }
                             }
                         }
-                     case .failure:
+                    case .failure:
                         Image(systemName: "photo.fill")
                             .foregroundStyle(.gray)
                     @unknown default:
