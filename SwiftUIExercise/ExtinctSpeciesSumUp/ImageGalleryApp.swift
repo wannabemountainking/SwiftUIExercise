@@ -8,73 +8,71 @@
 import SwiftUI
 
 struct ImageGalleryApp: View {
-    @State private var currentPage: Int = 0
-    let systemImages: [String] = [
+    @State private var currentPage: Int = 9
+    private let systemImages: [String] = [
         "star.fill", "heart.fill", "photo.fill", "leaf.fill", "sun.max.fill",
             "moon.fill", "cloud.fill", "bolt.fill", "drop.fill", "wind"
     ]
     
     var body: some View {
-        GroupBox {
-            VStack(spacing: 20) {
-                Text("\(currentPage + 1) / \(systemImages.count)")
-                    .font(.largeTitle)
-                
-                TabView(selection: $currentPage) {
-                    ForEach(0 ..< systemImages.count, id: \.self) { index in
-                        GeometryReader { geometry in
-                            Image(systemName: systemImages[index])
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: geometry.size.width - 20, height: geometry.size.width - 20)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        }//: GeometryReader
-                        .tag(index)
-                    }//: LOOP
-                }//: TabView
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                
-                HStack(spacing: 30) {
-                    Button {
-                        //action
-                        if currentPage > 0 {
-                            withAnimation(.easeInOut(duration: 0.5)) {
-                                currentPage -= 1
-                            }
-                        }
-                    } label: {
-                        Text("이전")
-                            .font(.headline)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.white)
-                            .frame(maxWidth: .infinity, minHeight: 35)
-                            .background(currentPage == 0 ? Color.accentColor.opacity(0.3) : .accentColor)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                    }
-                    .disabled(currentPage == 0)
 
-                    Button {
+        VStack(spacing: 50) {
+            Text("\(currentPage + 1) / \(systemImages.count)")
+                .font(.largeTitle)
+                .fontWeight(.ultraLight)
+                .fontWidth(.expanded)
+            
+            TabView(selection: $currentPage) {
+                ForEach(0 ..< systemImages.count, id: \.self) { index in
+                    Image(systemName: systemImages[index])
+                        .resizable()
+                        .scaledToFit()
+                        .padding()
+                        .tag(index)
+                }//:Loop
+                
+            }//:TabView
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            
+            HStack(spacing: 20) {
+                makeButton(
+                    title: "이전",
+                    isEnabled: currentPage > 0) {
                         //action
-                        if currentPage < systemImages.count - 1 {
-                            withAnimation(.easeInOut(duration: 0.6)) {
-                                currentPage += 1
-                            }
-                        }
-                    } label: {
-                        Text("다음")
-                            .font(.headline)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.white)
-                            .frame(maxWidth: .infinity, minHeight: 35)
-                            .background(currentPage == systemImages.count - 1 ? Color.accentColor.opacity(0.3) : .accentColor)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        currentPage -= 1
                     }
-                    .disabled(currentPage == systemImages.count - 1)
-                }//:HStack
-                .padding()
+                makeButton(
+                    title: "다음",
+                    isEnabled: currentPage < systemImages.count - 1) {
+                        //action
+                        currentPage += 1
+                    }
             }//: HStack
-        }//: GroupBox
+            .padding()
+        }//: VStack
+
     }//: body
+    
+    private func makeButton(title: String, isEnabled: Bool, pageAction: @escaping () -> Void) -> some View {
+        HStack(spacing: 20) {
+            Button {
+                //action
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    pageAction()
+                }
+            } label: {
+                Text(title)
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .fontWidth(.expanded)
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity, maxHeight: 40)
+                    .background(isEnabled ? Color.accentColor : Color.accentColor.opacity(0.2))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+            }//: Button
+            .disabled(!isEnabled)
+        }//: HStack
+    }//: function: button
 }
 
 
