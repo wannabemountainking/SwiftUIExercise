@@ -52,7 +52,8 @@ enum BasicColor: Identifiable {
 }
 
 struct ColorPalette: View {
-    @State private var currentColor: Color = .white
+
+    @State private var currentColor: Color = .red
     
     private let basicColors: [BasicColor] = [
         BasicColor.red, .blue, .green, .yellow
@@ -61,29 +62,49 @@ struct ColorPalette: View {
     var body: some View {
         ZStack {
             currentColor.ignoresSafeArea()
-            
-            VStack(spacing: 30) {
-                Spacer()
-                GroupBox {
-                    TabView(selection: $currentColor) {
-                        ForEach(basicColors) { basicColor in
-                            basicColor.color.ignoresSafeArea()
-                            Text(basicColor.title)
-                                .font(.largeTitle)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(basicColor.textColor)
-                        }//: Loop
-                    }//: TabView
-                    .tabViewStyle(.page(indexDisplayMode: .never))
-                }//: GroupBox
-                Spacer()
+            VStack {
+                TabView(selection: $currentColor) {
+                    ForEach(basicColors) { basicColor in
+                        Text(basicColor.title)
+                            .font(.largeTitle)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(basicColor.textColor)
+                            .tag(basicColor.color)
+                            
+                    }// LOOP
+                }//: TabView
+                .frame(height: 500)
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .padding(.bottom, 50)
                 
-                
+                HStack(spacing: 30) {
+                    ForEach(basicColors) { basicTint in
+                        Circle()
+                            .foregroundStyle(basicTint.color)
+                            .frame(height: currentColor == basicTint.color ? 90 : 60)
+                            .overlay {
+                                Circle()
+                                    .stroke(.white.opacity(0.7), lineWidth: 3)
+                                    .foregroundStyle(.clear)
+                                    .overlay {
+                                        Text(basicTint.title)
+                                            .font(.headline)
+                                            .foregroundStyle(basicTint.textColor)
+                                    }//: circle()
+                            }//: overlay
+                            .onTapGesture {
+                                currentColor = basicTint.color
+                            }
+                    }//: Loop
+                }//: HStack
             }//: VStack
-        }
-        
+        }// ZStack
+        .animation(.easeInOut(duration: 0.7), value: currentColor)
     }//: body
 }
+
+
+
 
 #Preview {
     ColorPalette()
