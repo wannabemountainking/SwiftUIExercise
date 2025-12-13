@@ -52,7 +52,6 @@ enum BasicColor: Identifiable {
 }
 
 struct ColorPalette: View {
-
     @State private var currentColor: Color = .red
     
     private let basicColors: [BasicColor] = [
@@ -63,48 +62,49 @@ struct ColorPalette: View {
         ZStack {
             currentColor.ignoresSafeArea()
             VStack {
+                Spacer()
+                Text(basicColors.first(where: {$0.color == currentColor})!.title)
+                    .font(.largeTitle)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(basicColors.first(where: { $0.color == currentColor })!.textColor)
+                Spacer()
                 TabView(selection: $currentColor) {
-                    ForEach(basicColors) { basicColor in
-                        Text(basicColor.title)
-                            .font(.largeTitle)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(basicColor.textColor)
-                            .tag(basicColor.color)
-                            
-                    }// LOOP
+                    Color.orange
                 }//: TabView
-                .frame(height: 500)
+                .frame(height: 100)
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .padding(.bottom, 50)
                 
-                HStack(spacing: 30) {
-                    ForEach(basicColors) { basicTint in
-                        Circle()
-                            .foregroundStyle(basicTint.color)
-                            .frame(height: currentColor == basicTint.color ? 90 : 60)
-                            .overlay {
-                                Circle()
-                                    .stroke(.white.opacity(0.7), lineWidth: 3)
-                                    .foregroundStyle(.clear)
-                                    .overlay {
-                                        Text(basicTint.title)
-                                            .font(.headline)
-                                            .foregroundStyle(basicTint.textColor)
-                                    }//: circle()
-                            }//: overlay
-                            .onTapGesture {
-                                currentColor = basicTint.color
-                            }
-                    }//: Loop
-                }//: HStack
+                HStack {
+                    ForEach(basicColors) { basicColor in
+                        VStack {
+                            Circle()
+                                .foregroundStyle(basicColor.color)
+                                .overlay {
+                                    Circle()
+                                        .stroke(basicColor.color == currentColor ? .white : basicColor.color, lineWidth: 5)
+                                }
+                                .overlay(content: {
+                                    Text(basicColor.title)
+                                        .font(.headline)
+                                        .fontWeight(.semibold)
+                                        .foregroundStyle(basicColor.textColor)
+                                })
+                                .frame(width: basicColor.color == currentColor ? 80 : 60, height: basicColor.color == currentColor ? 80 : 60)
+                                .padding()
+                                .onTapGesture {
+                                    withAnimation(.easeInOut(duration: 0.5)) {
+                                        currentColor = basicColor.color
+                                    }
+                                }
+                        }// : VStack
+                        .tag(basicColor.color)
+                    }// LOOP
+                }
             }//: VStack
         }// ZStack
-        .animation(.easeInOut(duration: 0.7), value: currentColor)
     }//: body
 }
-
-
-
 
 #Preview {
     ColorPalette()
